@@ -1,2 +1,2 @@
 # gef-features
-Feature files for BBC GEF.
+Feature files relating to BBC GEF.
