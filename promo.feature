@@ -273,7 +273,7 @@ Feature: Promo
   Requirement: A promo with an inline image must not include it inside the link element
   
     @html @automated
-    Scenario: Promo contains an inline image element with an empty alt attribute
+    Scenario: Promo with an inline image element not within the link element
       Given a .gef-promo with the code:
         """
         <div class="gef-promo-content">
@@ -285,7 +285,7 @@ Feature: Promo
       Then it passes
   
     @html @automated
-    Scenario: Promo contains an inline image element with an empty alt attribute
+    Scenario: Promo with an inline image element within the link element
       Given a .gef-promo with the code:
         """
         <div class="gef-promo-content">
@@ -374,6 +374,51 @@ Feature: Promo
         """
       When I check the promo inline image element has an alt attribute
       Then it is not applicable
+  
+  
+  Requirement: A promo must indicate if it links to an alternative format
+   
+    @html @automated
+    Scenario: Promo indicates it links to a different format
+      Given a .gef-promo with the code:
+        """
+        <div class="gef-promo-content">
+          <div class="gef-promo-image">
+            <img src="path/to/image" alt="">
+            <div class="gel-icon gel-icon--text" aria-hidden="true"><!-- PDF SVG icon --></div>
+          </div>
+          <a class="gef-promo-headline" href="path/to/content.pdf">Amazing content (PDF, 2.3Mb)</a>
+        </div>
+        """
+      When I check the promo indicates it links to an alternative format
+      Then it passes
+   
+    @html @automated
+    Scenario: Promo does not indicate it links to a different format
+      Given a .gef-promo with the code:
+        """
+        <div class="gef-promo-content">
+          <div class="gef-promo-image"><img src="path/to/image" alt=""></div>
+          <a class="gef-promo-headline" href="path/to/content.pdf">Amazing content</a>
+        </div>
+        """
+      When I check the promo indicates it links to an alternative format
+      Then it fails
+   
+    @html @automated
+    Scenario: Promo links to a video page
+      Given a .gef-promo with the code:
+        """
+        <div class="gef-promo-content">
+          <div class="gef-promo-image">
+            <img src="path/to/image" alt="">
+            <div class="gel-icon gel-icon--text" aria-hidden="true"><!-- Play SVG icon --></div>
+          </div>
+          <a class="gef-promo-headline" href="path/to/content">Amazing content (Video, 1:42 minutes)</a>
+        </div>
+        """
+      When I check the promo indicates it links to an alternative format
+      Then it is not applicable
      
 
   Requirement: A promo must be a large enough touch target
@@ -386,6 +431,3 @@ Feature: Promo
   
   
   Requirement: A promo must change visibly when in focus and hovered over
-  
-  
-  Requirement: A promo must indicate if it links to an alternative format
