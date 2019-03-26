@@ -37,7 +37,7 @@ Feature: Promo
           <span class="gef-promo-headline" role="link"><!-- javascript activated -->Amazing content</span>
         </div>
         """
-      When I check the promo is a link
+      When I check the promo contains a link
       Then it fails
 
     @html @automated
@@ -48,7 +48,7 @@ Feature: Promo
           <span class="gef-promo-headline"><!-- javascript activated -->Amazing content</span>
         </div>
         """
-      When I check the promo is a link
+      When I check the promo contains a link
       Then it fails
 
 
@@ -99,6 +99,42 @@ Feature: Promo
         </div>
         """
       When I check the promo link contains text
+      Then it fails
+
+  
+  Requirement: A promo must not contain a heading element
+    
+    @html @automated
+    Scenario: Promo does not contain a heading element
+      Given a .gef-promo with the code:
+        """
+        <div class="gef-promo-content">
+          <a class="gef-promo-headline" href="path/to/content">Amazing content</a>
+        </div>
+        """
+      When I check the promo does not contain a heading element
+      Then it passes
+  
+    @html @automated
+    Scenario: Promo link and text are within a heading element
+      Given a .gef-promo with the code:
+        """
+        <div class="gef-promo-content">
+          <h2><a class="gef-promo-headline" href="path/to/content">Amazing content</a></h2>
+        </div>
+        """
+      When I check the promo does not contain a heading element
+      Then it fails
+  
+    @html @automated
+    Scenario: Promo text is within a heading element
+      Given a .gef-promo with the code:
+        """
+        <div class="gef-promo-content">
+          <a class="gef-promo-headline" href="path/to/content"><h2>Amazing content</h2></a>
+        </div>
+        """
+      When I check the promo does not contain a heading element
       Then it fails
   
   
@@ -180,6 +216,57 @@ Feature: Promo
         a.gef-promo-headline:link { colour: blue; font-size: 16px; }
         """
       When I check the promo text has sufficient contrast
+      Then it fails
+  
+  
+  Requirement: A promo must contain text that is resizable
+    
+    @html @automated
+    Scenario: Promo contains text sized with relative units
+      Given a .gef-promo with the code:
+        """
+        <div class="gef-promo-content">
+          <a class="gef-promo-headline" href="path/to/content">Amazing content</a>
+        </div>
+        """
+      And the styles:
+        """
+        body { font-size: 62.5%; }
+        a.gef-promo-headline:link { font-size: 1.6em; } /* em, ex, ch, rem, vw, vh, vmin, vmax, % */ 
+        """
+      When I check the promo text is resizable
+      Then it passes
+    
+    @html @automated
+    Scenario: Promo contains text sized with absolute units
+      Given a .gef-promo with the code:
+        """
+        <div class="gef-promo-content">
+          <a class="gef-promo-headline" href="path/to/content">Amazing content</a>
+        </div>
+        """
+      And the styles:
+        """
+        body { font-size: 10px; }
+        a.gef-promo-headline:link { font-size: 16px; } /* cm, mm, in, px, pt, pc */ 
+        """
+      When I check the promo text is resizable
+      Then it fails
+    
+    @html @automated
+    Scenario: Promo contains text sized with a combination of relative and absolute units
+      Given a .gef-promo with the code:
+        """
+        <div class="gef-promo-content">
+          <a class="gef-promo-headline" href="path/to/content">Amazing content</a>
+        </div>
+        """
+      And the styles:
+        """
+        body { font-size: 10px; } /* cm, mm, in, px, pt, pc */
+        a.gef-promo-headline:link { font-size: 1.6em; } /* em, ex, ch, rem, vw, vh, vmin, vmax, % */ 
+        """
+      When I check the promo text is resizable
       Then it fails
   
   
