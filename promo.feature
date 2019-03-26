@@ -270,6 +270,35 @@ Feature: Promo
       Then it fails
   
   
+  Requirement: A promo with an inline image must not include it inside the link element
+  
+    @html @automated
+    Scenario: Promo contains an inline image element with an empty alt attribute
+      Given a .gef-promo with the code:
+        """
+        <div class="gef-promo-content">
+          <div class="gef-promo-image"><img src="path/to/image" alt=""></div>
+          <a class="gef-promo-headline" href="path/to/content">Amazing content</a>
+        </div>
+        """
+      When I check the promo inline image element is not inside the link element
+      Then it passes
+  
+    @html @automated
+    Scenario: Promo contains an inline image element with an empty alt attribute
+      Given a .gef-promo with the code:
+        """
+        <div class="gef-promo-content">
+          <a class="gef-promo-headline" href="path/to/content">
+            <div class="gef-promo-image"><img src="path/to/image" alt=""></div>
+            <div class="promo-headline">Amazing content</div>
+          </a>
+        </div>
+        """
+      When I check the promo inline image element is not inside the link element
+      Then it fails
+  
+  
   Requirement: A promo with an inline image must include an alt attribute on the image element
    
     @html @automated
