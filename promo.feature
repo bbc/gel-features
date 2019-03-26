@@ -50,8 +50,58 @@ Feature: Promo
         """
       When I check the promo is a link
       Then it fails
-    
-    
+
+
+  Requirement: A promo's link text must resemble the target page's title or main heading
+  
+    @html @automated
+    Scenario: Promo contains a link with text
+      Given a .gef-promo with the code:
+        """
+        <div class="gef-promo-content">
+          <a class="gef-promo-headline" href="path/to/content">Amazing content</a>
+        </div>
+        """
+      When I check the promo link contains text
+      Then it requests a manual check for the scenario "Promo link has text"
+      
+    @html @manual
+    Scenario: Promo link has text
+      Given I am performing a manual test of "Promo: A promo's link text must resemble the target page's title or main heading"
+      And I have been asked "Does the link text resemble the title or main heading of the target page?"
+      When I answer "Yes"
+      Then the manual test passes
+      
+    @html @manual
+    Scenario: Promo link has text
+      Given I am performing a manual test of "Promo: A promo's link text must resemble the target page's title or main heading"
+      And I have been asked "Does the link text resemble the title or main heading of the target page?"
+      When I answer "No"
+      Then the manual test fails
+      
+    @html @automated
+    Scenario: Promo contains an empty link element
+      Given a .gef-promo with the code:
+        """
+        <div class="gef-promo-content">
+          <a class="gef-promo-headline" href="path/to/content"></a>
+        </div>
+        """
+      When I check the promo link contains text
+      Then it fails
+      
+    @html @automated
+    Scenario: Promo contains a link with non-text content
+      Given a .gef-promo with the code:
+        """
+        <div class="gef-promo-content">
+          <a class="gef-promo-headline" href="path/to/content"><!-- image or icon --></a>
+        </div>
+        """
+      When I check the promo link contains text
+      Then it fails
+  
+  
   Requirement: A promo must contain text that contrasts sufficiently with the element behind that text
     
     @html @automated
@@ -104,15 +154,15 @@ Feature: Promo
       
     @html @manual
     Scenario: Promo contains coloured text against a background image
-      Given I am performing a manual test of "Promo: A promo must contain text that contrasts sufficiently with the element behind that text":
-      And I have been asked "Does the promo text contrast sufficiently with the element behind it?
+      Given I am performing a manual test of "Promo: A promo must contain text that contrasts sufficiently with the element behind that text"
+      And I have been asked "Does the promo text contrast sufficiently with the element behind it?"
       When I answer "Yes"
       Then the manual test passes
       
     @html @manual
     Scenario: Promo contains coloured text against a background image
-      Given I am performing a manual test of "Promo: A promo must contain text that contrasts sufficiently with the element behind that text":
-      And I have been asked "Does the promo text contrast sufficiently with the element behind it?
+      Given I am performing a manual test of "Promo: A promo must contain text that contrasts sufficiently with the element behind that text"
+      And I have been asked "Does the promo text contrast sufficiently with the element behind it?"
       When I answer "No"
       Then the manual test fails
       
@@ -185,15 +235,15 @@ Feature: Promo
       
     @html @manual
     Scenario: Promo contains an inline image with alt text
-      Given I am performing a manual test of "Promo: A promo with an inline image must include an alt attribute on the image element":
-      And I have been asked "Is the promo image alt text appropriate for the image and context?
+      Given I am performing a manual test of "Promo: A promo with an inline image must include an alt attribute on the image element"
+      And I have been asked "Is the promo image alt text appropriate for the image and context?"
       When I answer "Yes"
       Then the manual test passes
       
     @html @manual
     Scenario: Promo contains an inline image with alt text
-      Given I am performing a manual test of "Promo: A promo with an inline image must include an alt attribute on the image element":
-      And I have been asked "Is the promo image alt text appropriate for the image and context?
+      Given I am performing a manual test of "Promo: A promo with an inline image must include an alt attribute on the image element"
+      And I have been asked "Is the promo image alt text appropriate for the image and context?"
       When I answer "No"
       Then the manual test fails
      
