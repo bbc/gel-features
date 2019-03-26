@@ -50,8 +50,8 @@ Feature: Promo
         """
       When I check the promo contains a link
       Then it fails
-
-
+  
+  
   Requirement: A promo's link text must resemble the target page's title or main heading
   
     @html @automated
@@ -347,3 +347,16 @@ Feature: Promo
       Then it is not applicable
      
 
+  Requirement: A promo must be a large enough touch target
+  
+  
+  Requirement: A promo must indicate that it is interactive
+  
+  
+  Requirement: A promo must be able to receive focus
+  
+  
+  Requirement: A promo must change visibly when in focus and hovered over
+  
+  
+  Requirement: A promo must indicate if it links to an alternative format
