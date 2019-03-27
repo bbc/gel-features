@@ -66,14 +66,14 @@ Feature: Promo
       Then it requests a manual check for the scenario "Promo link has text"
       
     @html @manual
-    Scenario: Promo link has text
+    Scenario: Promo link has text that may be appropriate
       Given I am performing a manual test of "Promo: A promo's link text must resemble the target page's title or main heading"
       And I have been asked "Does the link text resemble the title or main heading of the target page?"
       When I answer "Yes"
       Then the manual test passes
       
     @html @manual
-    Scenario: Promo link has text
+    Scenario: Promo link has text that may be appropriate
       Given I am performing a manual test of "Promo: A promo's link text must resemble the target page's title or main heading"
       And I have been asked "Does the link text resemble the title or main heading of the target page?"
       When I answer "No"
@@ -189,14 +189,14 @@ Feature: Promo
       Then it requests a manual check for the scenario "Promo contains coloured text against a background image"
       
     @html @manual
-    Scenario: Promo contains coloured text against a background image
+    Scenario: Promo contains coloured text against a background image that may vary in contrast
       Given I am performing a manual test of "Promo: A promo must contain text that contrasts sufficiently with the element behind that text"
       And I have been asked "Does the promo text contrast sufficiently with the element behind it?"
       When I answer "Yes"
       Then the manual test passes
       
     @html @manual
-    Scenario: Promo contains coloured text against a background image
+    Scenario: Promo contains coloured text against a background image that may vary in contrast
       Given I am performing a manual test of "Promo: A promo must contain text that contrasts sufficiently with the element behind that text"
       And I have been asked "Does the promo text contrast sufficiently with the element behind it?"
       When I answer "No"
@@ -350,14 +350,14 @@ Feature: Promo
       Then it requests a manual check for the scenario "Promo contains an inline image with alt text"
       
     @html @manual
-    Scenario: Promo contains an inline image with alt text
+    Scenario: Promo contains an inline image with alt text that may be appropriate
       Given I am performing a manual test of "Promo: A promo with an inline image must include an alt attribute on the image element"
       And I have been asked "Is the promo image alt text appropriate for the image and context?"
       When I answer "Yes"
       Then the manual test passes
       
     @html @manual
-    Scenario: Promo contains an inline image with alt text
+    Scenario: Promo contains an inline image with alt text that may be appropriate
       Given I am performing a manual test of "Promo: A promo with an inline image must include an alt attribute on the image element"
       And I have been asked "Is the promo image alt text appropriate for the image and context?"
       When I answer "No"
@@ -520,8 +520,38 @@ Feature: Promo
   
   Requirement: A promo must indicate that it is interactive
   
+    @html @manual
+    Scenario: Promo may appear to be interative
+      Given I am performing a manual test of "Promo: A promo must indicate that it is interactive"
+      And I have been asked "Does the promo look like something to interactive with?"
+      When I answer "Yes"
+      Then the manual test passes
+      
+    @html @manual
+    Scenario: Promo may appear to be interactive
+      Given I am performing a manual test of "Promo: A promo must indicate that it is interactive"
+      And I have been asked "Does the promo look like something to interactive with?"
+      When I answer "No"
+      Then the manual test fails
+  
   
   Requirement: A promo must be able to receive focus
+  
+  It may be possible to automate this by checking a promo is included in the browser tabindex list.
+  
+    @html @manual
+    Scenario: Promo may be able to receive focus
+      Given I am performing a manual test of "Promo: A promo must be able to receive focus"
+      And I have been asked "Can keyboard focus move to the promo and away from the promo?"
+      When I answer "Yes"
+      Then the manual test passes
+      
+    @html @manual
+    Scenario: Promo may be able to receive focus
+      Given I am performing a manual test of "Promo: A promo must be able to receive focus"
+      And I have been asked "Can keyboard focus move to the promo and away from the promo?"
+      When I answer "No"
+      Then the manual test fails
   
   
   Requirement: A promo must change visibly when focused on and hovered over
