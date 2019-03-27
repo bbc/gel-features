@@ -232,7 +232,7 @@ Feature: Promo
       And the styles:
         """
         body { font-size: 62.5%; }
-        a.gef-promo-headline:link { font-size: 1.6em; } /* em, ex, ch, rem, vw, vh, vmin, vmax, % */ 
+        a.gef-promo-headline { font-size: 1.6em; } /* em, ex, ch, rem, vw, vh, vmin, vmax, % */ 
         """
       When I check the promo text is resizable
       Then it passes
@@ -248,7 +248,7 @@ Feature: Promo
       And the styles:
         """
         body { font-size: 10px; }
-        a.gef-promo-headline:link { font-size: 16px; } /* cm, mm, in, px, pt, pc */ 
+        a.gef-promo-headline { font-size: 16px; } /* cm, mm, in, px, pt, pc */ 
         """
       When I check the promo text is resizable
       Then it fails
@@ -264,7 +264,7 @@ Feature: Promo
       And the styles:
         """
         body { font-size: 10px; } /* cm, mm, in, px, pt, pc */
-        a.gef-promo-headline:link { font-size: 1.6em; } /* em, ex, ch, rem, vw, vh, vmin, vmax, % */ 
+        a.gef-promo-headline { font-size: 1.6em; } /* em, ex, ch, rem, vw, vh, vmin, vmax, % */ 
         """
       When I check the promo text is resizable
       Then it fails
@@ -385,7 +385,7 @@ Feature: Promo
         <div class="gef-promo-content">
           <div class="gef-promo-image">
             <img src="path/to/image" alt="">
-            <div class="gel-icon gel-icon--text" aria-hidden="true"><!-- PDF SVG icon --></div>
+            <div class="gef-promo__indicator" aria-hidden="true"><!-- PDF SVG icon --></div>
           </div>
           <a class="gef-promo-headline" href="path/to/content.pdf">Amazing content (PDF, 2.3Mb)</a>
         </div>
@@ -412,16 +412,110 @@ Feature: Promo
         <div class="gef-promo-content">
           <div class="gef-promo-image">
             <img src="path/to/image" alt="">
-            <div class="gel-icon gel-icon--text" aria-hidden="true"><!-- Play SVG icon --></div>
+            <div class="gef-promo__indicator" aria-hidden="true"><!-- Play SVG icon --></div>
           </div>
           <a class="gef-promo-headline" href="path/to/content">Amazing content (Video, 1:42 minutes)</a>
         </div>
         """
       When I check the promo indicates it links to an alternative format
       Then it is not applicable
+  
+  
+  Requirement: A promo with a media indicator must do so visually and to assistive technology
+   
+    @html @automated
+    Scenario: Promo indicates a type of media content it links to
+      Given a .gef-promo with the code:
+        """
+        <div class="gef-promo-content">
+          <div class="gef-promo-image">
+            <img src="path/to/image" alt="">
+            <div class="gef-promo__indicator" aria-hidden="true"><!-- Play SVG icon --></div>
+          </div>
+          <a class="gef-promo-headline" href="path/to/content">Amazing content (Video, 1:42 minutes)</a>
+        </div>
+        """
+      When I check the promo indicates it links to an alternative format
+      Then it passes
+   
+    @html @automated
+    Scenario: Promo indicates a type of media content it links to
+      Given a .gef-promo with the code:
+        """
+        <div class="gef-promo-content">
+          <div class="gef-promo-image">
+            <img src="path/to/image" alt="">
+            <div class="gef-promo__indicator" aria-hidden="true"><!-- Play SVG icon --></div>
+          </div>
+          <a class="gef-promo-headline" href="path/to/content">Amazing content</a>
+        </div>
+        """
+      When I check the promo indicates it links to an alternative format
+      Then it fails
      
 
+  Requirement: A promo with a description must not include it inside the link element
+  
+    @html @automated
+    Scenario: Promo with a description not within the link element
+      Given a .gef-promo with the code:
+        """
+        <div class="gef-promo-content">
+          <a class="gef-promo-headline" href="path/to/content">Amazing content</a>
+          <p>You really want to check it out!</p>
+        </div>
+        """
+      When I check the promo description is not inside the link element
+      Then it passes
+  
+    @html @automated
+    Scenario: Promo with a description within the link element
+      Given a .gef-promo with the code:
+        """
+        <div class="gef-promo-content">
+          <a class="gef-promo-headline" href="path/to/content">
+            <div class="promo-headline">Amazing content</div>
+            <p>You really want to check it out!</p>
+          </a>
+        </div>
+        """
+      When I check the promo description is not inside the link element
+      Then it fails
+  
+  
   Requirement: A promo must be a large enough touch target
+    
+    @html @automated
+    Scenario: Promo is large enough
+      Given a .gef-promo with the code:
+        """
+        <div class="gef-promo-content">
+          <a class="gef-promo-headline" href="path/to/content">Amazing content</a>
+        </div>
+        """
+      And the styles:
+        """
+        body { font-size:10px; }
+        a.gef-promo-headline { font-size: 1.6em; padding: 0.5em; } /* minimum height and width of 32px */
+        """
+      When I check the promo target size is large enough
+      Then it passes
+    
+    @html @automated
+    Scenario: Promo is not large enough
+      Given a .gef-promo with the code:
+        """
+        <div class="gef-promo-content">
+          <a class="gef-promo-headline" href="path/to/content">Amazing content</a>
+        </div>
+        """
+      And the styles:
+        """
+        body { font-size:62.5%; }
+        a.gef-promo-headline { font-size: 1.6em; }
+        """
+      When I check the promo target size is large enough
+      Then it fails
   
   
   Requirement: A promo must indicate that it is interactive
@@ -430,4 +524,37 @@ Feature: Promo
   Requirement: A promo must be able to receive focus
   
   
-  Requirement: A promo must change visibly when in focus and hovered over
+  Requirement: A promo must change visibly when focused on and hovered over
+    
+    @html @automated
+    Scenario: Promo changes appearance on focus and hover
+      Given a .gef-promo with the code:
+        """
+        <div class="gef-promo-content">
+          <a class="gef-promo-headline" href="path/to/content">Amazing content</a>
+        </div>
+        """
+      And the styles:
+        """
+        a.gef-promo-headline:link, a.gef-promo-headline:visited { colour: blue; text-decoration: none; font-weight: bold; }
+        a.gef-promo-headline:hover, a.gef-promo-headline:focus { colour: purple; text-decoration: underline; }
+        """
+      When I check the promo changes visibly on focus and hover
+      Then it passes
+    
+    @html @automated
+    Scenario: Promo changes appearance on focus and hover
+      Given a .gef-promo with the code:
+        """
+        <div class="gef-promo-content">
+          <a class="gef-promo-headline" href="path/to/content">Amazing content</a>
+        </div>
+        """
+      And the styles:
+        """
+        a.gef-promo-headline:link { colour: blue; text-decoration: none; font-weight: bold; }
+        a.gef-promo-headline:hover { colour: purple; text-decoration: underline; }
+        """
+      When I check the promo changes visibly on focus and hover
+      Then it fails
+
