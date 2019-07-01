@@ -1,2 +1,3 @@
-# gef-features
-Feature files relating to BBC GEF.
+# gel-features
+
+Feature files relating to BBC GEL.
