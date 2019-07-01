@@ -2,7 +2,7 @@ Feature: Promo
 
   The Promo component is used to advertise BBC content. Principally it is a link to that content, but 
   it can include a combination of supporting content to draw the reader's attention. Full details are 
-  outlined on the GEL and GEF Promo pages.
+  outlined for the GEL Promo pages.
   
   
   Rule: A promo must link to other content
